@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taller Guiado: Solución Paso a Paso de Expresiones Algebraicas</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- MathJax para renderizar LaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #34495e;
+            background-color: #f8f9fa;
+        }
+        .exercise-container {
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: white;
+        }
+        .exercise-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .exercise-body {
+            padding: 20px;
+        }
+        .expression-container {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .step-container {
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .concept {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .step-description {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .step-math {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+        .nav-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover {
+            background-color: #2980b9;
+        }
+        .nav-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        .step-indicator {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .exercise-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .exercise-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            min-width: 40px;
+            text-align: center;
+        }
+        .exercise-btn.active {
+            background-color: #e74c3c;
+        }
+        .exercise-btn:hover:not(.active) {
+            background-color: #34495e;
+        }
+        .instructions {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #edf2f7;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                background-color: white;
+            }
+            .exercise-container {
+                box-shadow: none;
+                margin: 10px 0;
+                page-break-inside: avoid;
+            }
+        }
+        .mjx-chtml {
+            margin: 10px 0 !important;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <header class="max-w-4xl mx-auto text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Taller Guiado: Solución Paso a Paso de Expresiones Algebraicas</h1>
+        <h2 class="text-xl text-gray-600">(con Racionalización)</h2>
+    </header>
+
+    <div class="instructions">
+        <h3 class="text-xl font-bold mb-3">Instrucciones</h3>
+        <p class="mb-4">Este taller presenta la solución paso a paso para 14 expresiones algebraicas, indicando el concepto matemático utilizado en cada paso. Se incluyen los pasos de racionalización cuando es aplicable.</p>
+        <p class="mb-4">Para cada ejercicio:</p>
+        <ol class="list-decimal pl-6 mb-4">
+            <li>Observe la expresión inicial</li>
+            <li>Siga los pasos secuenciales de resolución</li>
+            <li>Lea el concepto matemático aplicado en cada transformación</li>
+            <li>Utilice los botones de navegación para moverse entre pasos y ejercicios</li>
+        </ol>
+    </div>
+
+    <div class="exercise-nav no-print">
+        <button class="exercise-btn active" onclick="showExercise(1)">1</button>
+        <button class="exercise-btn" onclick="showExercise(2)">2</button>
+        <button class="exercise-btn" onclick="showExercise(3)">3</button>
+        <button class="exercise-btn" onclick="showExercise(4)">4</button>
+        <button class="exercise-btn" onclick="showExercise(5)">5</button>
+        <button class="exercise-btn" onclick="showExercise(6)">6</button>
+        <button class="exercise-btn" onclick="showExercise(7)">7</button>
+        <button class="exercise-btn" onclick="showExercise(8)">8</button>
+        <button class="exercise-btn" onclick="showExercise(9)">9</button>
+        <button class="exercise-btn" onclick="showExercise(10)">10</button>
+        <button class="exercise-btn" onclick="showExercise(11)">11</button>
+        <button class="exercise-btn" onclick="showExercise(12)">12</button>
+        <button class="exercise-btn" onclick="showExercise(13)">13</button>
+        <button class="exercise-btn" onclick="showExercise(14)">14</button>
+    </div>
+
+    <!-- Ejercicio 1 -->
+    <div id="exercise1" class="exercise-container mb-8">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 1</h2>
+            <span class="text-sm">División de fracciones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{q^{2}-1}{q^{2}+2q-3}\div\dfrac{q-4}{q+3}\]</div>
+            </div>
+
+            <div id="ex1-step1" class="step-container">
+                <div class="concept">Concepto: División de fracciones algebraicas</div>
+                <div class="step-description">Se multiplica la primera fracción por el recíproco de la segunda.</div>
+                <div class="step-math">\[ \dfrac{q^{2}-1}{q^{2}+2q-3} \times \dfrac{q+3}{q-4} \]</div>
+            </div>
+
+            <div id="ex1-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización de polinomios</div>
+                <div class="step-description">Diferencia de cuadrados para el numerador del primer término, trinomio cuadrado para el denominador del primer término.</div>
+                <div class="step-math">\[ \dfrac{(q-1)(q+1)}{(q+3)(q-1)} \times \dfrac{q+3}{q-4} \]</div>
+            </div>
+
+            <div id="ex1-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes en numerador y denominador.</div>
+                <div class="step-math">\[ \dfrac{\cancel{(q-1)}(q+1)}{\cancel{(q+3)}\cancel{(q-1)}} \times \dfrac{\cancel{(q+3)}}{q-4} \]</div>
+            </div>
+
+            <div id="ex1-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicación de fracciones</div>
+                <div class="step-description">Multiplicación de numeradores y denominadores.</div>
+                <div class="step-math">\[ \dfrac{q+1}{q-4} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex1-prev-btn" class="nav-btn" disabled onclick="prevStep(1)">Paso anterior</button>
+                </div>
+                <div id="ex1-step-indicator" class="step-indicator">Paso 1 de 4</div>
+                <div class="flex items-center">
+                    <button id="ex1-next-btn" class="nav-btn" onclick="nextStep(1)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 2 -->
+    <div id="exercise2" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 2</h2>
+            <span class="text-sm">División de fracciones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{s^{2}-5s+6}{s^{2}+7s+10}\div\dfrac{2-s}{s+2}\]</div>
+            </div>
+
+            <div id="ex2-step1" class="step-container">
+                <div class="concept">Concepto: División de fracciones algebraicas</div>
+                <div class="step-description">Se multiplica la primera fracción por el recíproco de la segunda.</div>
+                <div class="step-math">\[ \dfrac{s^{2}-5s+6}{s^{2}+7s+10} \times \dfrac{s+2}{2-s} \]</div>
+            </div>
+
+            <div id="ex2-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización de polinomios</div>
+                <div class="step-description">Trinomios cuadrados. Se factoriza $2-s$ como $-(s-2)$.</div>
+                <div class="step-math">\[ \dfrac{(s-2)(s-3)}{(s+2)(s+5)} \times \dfrac{s+2}{-(s-2)} \]</div>
+            </div>
+
+            <div id="ex2-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes en numerador y denominador.</div>
+                <div class="step-math">\[ \dfrac{\cancel{(s-2)}(s-3)}{\cancel{(s+2)}(s+5)} \times \dfrac{\cancel{(s+2)}}{-\cancel{(s-2)}} \]</div>
+            </div>
+
+            <div id="ex2-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicación de fracciones</div>
+                <div class="step-description">Multiplicación de numeradores y denominadores.</div>
+                <div class="step-math">\[ \dfrac{s-3}{-(s+5)} = -\dfrac{s-3}{s+5} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex2-prev-btn" class="nav-btn" disabled onclick="prevStep(2)">Paso anterior</button>
+                </div>
+                <div id="ex2-step-indicator" class="step-indicator">Paso 1 de 4</div>
+                <div class="flex items-center">
+                    <button id="ex2-next-btn" class="nav-btn" onclick="nextStep(2)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 3 -->
+    <div id="exercise3" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 3</h2>
+            <span class="text-sm">Simplificación de expresiones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{x^{2}+xy+y^{2}}{\dfrac{x^{2}}{y}-\dfrac{y^{2}}{x}}\]</div>
+            </div>
+
+            <div id="ex3-step1" class="step-container">
+                <div class="concept">Concepto: Simplificar el denominador encontrando un común denominador</div>
+                <div class="step-description">Encontramos un común denominador para las fracciones en el denominador.</div>
+                <div class="step-math">\[ \dfrac{x^{2}+xy+y^{2}}{\dfrac{x^3 - y^3}{xy}} \]</div>
+            </div>
+
+            <div id="ex3-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: División de fracciones</div>
+                <div class="step-description">Multiplicar por el recíproco del denominador.</div>
+                <div class="step-math">\[ (x^{2}+xy+y^{2}) \times \dfrac{xy}{x^3 - y^3} \]</div>
+            </div>
+
+            <div id="ex3-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización de la diferencia de cubos</div>
+                <div class="step-description">$x^3 - y^3 = (x-y)(x^2+xy+y^2)$</div>
+                <div class="step-math">\[ (x^{2}+xy+y^{2}) \times \dfrac{xy}{(x-y)(x^2+xy+y^2)} \]</div>
+            </div>
+
+            <div id="ex3-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \cancel{(x^{2}+xy+y^{2})} \times \dfrac{xy}{(x-y)\cancel{(x^2+xy+y^{2})}} \]</div>
+            </div>
+
+            <div id="ex3-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicación</div>
+                <div class="step-description">Resultado final simplificado.</div>
+                <div class="step-math">\[ \dfrac{xy}{x-y} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex3-prev-btn" class="nav-btn" disabled onclick="prevStep(3)">Paso anterior</button>
+                </div>
+                <div id="ex3-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex3-next-btn" class="nav-btn" onclick="nextStep(3)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 4 -->
+    <div id="exercise4" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 4</h2>
+            <span class="text-sm">Simplificación de fracciones con exponentes negativos</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{u^{-2}-v^{-2}}{u^{2}v^{2}}\]</div>
+            </div>
+
+            <div id="ex4-step1" class="step-container">
+                <div class="concept">Concepto: Reescribir términos con exponentes negativos como fracciones positivas</div>
+                <div class="step-description">$a^{-n} = 1/a^n$</div>
+                <div class="step-math">\[ \dfrac{\dfrac{1}{u^{2}}-\dfrac{1}{v^{2}}}{u^{2}v^{2}} \]</div>
+            </div>
+
+            <div id="ex4-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Encontrar un común denominador en el numerador</div>
+                <div class="step-description">Operamos las fracciones en el numerador.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{v^{2}-u^{2}}{u^{2}v^{2}}}{u^{2}v^{2}} \]</div>
+            </div>
+
+            <div id="ex4-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: División de fracciones</div>
+                <div class="step-description">Multiplicar el numerador por el recíproco del denominador.</div>
+                <div class="step-math">\[ \dfrac{v^{2}-u^{2}}{u^{2}v^{2}} \times \dfrac{1}{u^{2}v^{2}} \]</div>
+            </div>
+
+            <div id="ex4-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicación de fracciones</div>
+                <div class="step-description">Multiplicar numeradores y denominadores.</div>
+                <div class="step-math">\[ \dfrac{v^{2}-u^{2}}{u^{4}v^{4}} \]</div>
+            </div>
+
+            <div id="ex4-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización del numerador</div>
+                <div class="step-description">Diferencia de cuadrados.</div>
+                <div class="step-math">\[ \dfrac{(v-u)(v+u)}{u^{4}v^{4}} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex4-prev-btn" class="nav-btn" disabled onclick="prevStep(4)">Paso anterior</button>
+                </div>
+                <div id="ex4-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex4-next-btn" class="nav-btn" onclick="nextStep(4)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 5 -->
+    <div id="exercise5" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 5</h2>
+            <span class="text-sm">Racionalización</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{1+\dfrac{1}{\sqrt{x}}}{1+\dfrac{1}{\sqrt{y}}}\]</div>
+            </div>
+
+            <div id="ex5-step1" class="step-container">
+                <div class="concept">Concepto: Combinar términos en el numerador y el denominador</div>
+                <div class="step-description">Encontrando un común denominador.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{\sqrt{x}+1}{\sqrt{x}}}{\dfrac{\sqrt{y}+1}{\sqrt{y}}} \]</div>
+            </div>
+
+            <div id="ex5-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: División de fracciones</div>
+                <div class="step-description">Multiplicar por el recíproco del denominador.</div>
+                <div class="step-math">\[ \dfrac{\sqrt{x}+1}{\sqrt{x}} \times \dfrac{\sqrt{y}}{\sqrt{y}+1} \]</div>
+            </div>
+
+            <div id="ex5-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicación de fracciones</div>
+                <div class="step-description">Multiplicando numeradores y denominadores.</div>
+                <div class="step-math">\[ \dfrac{\sqrt{y}(\sqrt{x}+1)}{\sqrt{x}(\sqrt{y}+1)} = \dfrac{\sqrt{xy}+\sqrt{y}}{\sqrt{xy}+\sqrt{x}} \]</div>
+            </div>
+
+            <div id="ex5-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Racionalización del denominador</div>
+                <div class="step-description">Multiplicar el numerador y el denominador por el conjugado del denominador ($\sqrt{xy}-\sqrt{x}$).</div>
+                <div class="step-math">\[ \dfrac{(\sqrt{xy}+\sqrt{y})}{(\sqrt{xy}+\sqrt{x})} \times \dfrac{(\sqrt{xy}-\sqrt{x})}{(\sqrt{xy}-\sqrt{x})} \]</div>
+            </div>
+
+            <div id="ex5-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Aplicar la propiedad $(a+b)(a-b) = a^2-b^2$</div>
+                <div class="step-description">En el denominador y distribuir en el numerador.</div>
+                <div class="step-math">\[ \dfrac{\sqrt{xy}(\sqrt{xy}-\sqrt{x})+\sqrt{y}(\sqrt{xy}-\sqrt{x})}{(\sqrt{xy})^2-(\sqrt{x})^2} \]</div>
+            </div>
+
+            <div id="ex5-step6" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Desarrollo algebraico</div>
+                <div class="step-description">Simplificar la expresión.</div>
+                <div class="step-math">\[ \dfrac{xy - \sqrt{x^2y} + \sqrt{xy^2} - \sqrt{xy}}{xy - x} = \dfrac{xy - x\sqrt{y} + y\sqrt{x} - \sqrt{xy}}{xy - x} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex5-prev-btn" class="nav-btn" disabled onclick="prevStep(5)">Paso anterior</button>
+                </div>
+                <div id="ex5-step-indicator" class="step-indicator">Paso 1 de 6</div>
+                <div class="flex items-center">
+                    <button id="ex5-next-btn" class="nav-btn" onclick="nextStep(5)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 6 -->
+    <div id="exercise6" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 6</h2>
+            <span class="text-sm">Simplificación de fracción con diferencia de cuadrados</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{\dfrac{1}{(x+h)^{2}}-\dfrac{1}{x^{2}}}{h}\]</div>
+            </div>
+
+            <div id="ex6-step1" class="step-container">
+                <div class="concept">Concepto: Encontrar un común denominador en el numerador</div>
+                <div class="step-description">Operamos las fracciones en el numerador.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{x^{2}-(x+h)^{2}}{(x+h)^{2}x^{2}}}{h} \]</div>
+            </div>
+
+            <div id="ex6-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Expandir $(x+h)^2$ en el numerador</div>
+                <div class="step-description">Aplicamos la fórmula del cuadrado de un binomio.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{x^{2}-(x^{2}+2xh+h^{2})}{(x+h)^{2}x^{2}}}{h} \]</div>
+            </div>
+
+            <div id="ex6-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificar el numerador</div>
+                <div class="step-description">Realizar las operaciones indicadas.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{x^{2}-x^{2}-2xh-h^{2}}{(x+h)^{2}x^{2}}}{h} = \dfrac{\dfrac{-2xh-h^{2}}{(x+h)^{2}x^{2}}}{h} \]</div>
+            </div>
+
+            <div id="ex6-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorizar $h$ en el numerador</div>
+                <div class="step-description">Sacar factor común $h$.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{h(-2x-h)}{(x+h)^{2}x^{2}}}{h} \]</div>
+            </div>
+
+            <div id="ex6-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: División por $h$</div>
+                <div class="step-description">Multiplicar por $1/h$.</div>
+                <div class="step-math">\[ \dfrac{h(-2x-h)}{(x+h)^{2}x^{2}} \times \dfrac{1}{h} \]</div>
+            </div>
+
+            <div id="ex6-step6" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación</div>
+                <div class="step-description">Cancelar $h$.</div>
+                <div class="step-math">\[ \dfrac{\cancel{h}(-2x-h)}{(x+h)^{2}x^{2} \cancel{h}} \]</div>
+            </div>
+
+            <div id="ex6-step7" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado final</div>
+                <div class="step-description">Expresión simplificada.</div>
+                <div class="step-math">\[ \dfrac{-2x-h}{(x+h)^{2}x^{2}} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex6-prev-btn" class="nav-btn" disabled onclick="prevStep(6)">Paso anterior</button>
+                </div>
+                <div id="ex6-step-indicator" class="step-indicator">Paso 1 de 7</div>
+                <div class="flex items-center">
+                    <button id="ex6-next-btn" class="nav-btn" onclick="nextStep(6)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 7 -->
+    <div id="exercise7" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 7</h2>
+            <span class="text-sm">Racionalización</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{v}{\sqrt{z}}-\dfrac{z}{\sqrt{v}}\]</div>
+            </div>
+
+            <div id="ex7-step1" class="step-container">
+                <div class="concept">Concepto: Encontrar un común denominador</div>
+                <div class="step-description">El común denominador es $\sqrt{z}\sqrt{v} = \sqrt{zv}$.</div>
+                <div class="step-math">\[ \dfrac{v\sqrt{v}}{\sqrt{z}\sqrt{v}} - \dfrac{z\sqrt{z}}{\sqrt{v}\sqrt{z}} = \dfrac{v\sqrt{v}-z\sqrt{z}}{\sqrt{zv}} \]</div>
+            </div>
+
+            <div id="ex7-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Racionalización del denominador</div>
+                <div class="step-description">Multiplicar el numerador y el denominador por $\sqrt{zv}$.</div>
+                <div class="step-math">\[ \dfrac{v\sqrt{v}-z\sqrt{z}}{\sqrt{zv}} \times \dfrac{\sqrt{zv}}{\sqrt{zv}} \]</div>
+            </div>
+
+            <div id="ex7-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Multiplicar términos</div>
+                <div class="step-description">Distribuir la multiplicación.</div>
+                <div class="step-math">\[ \dfrac{(v\sqrt{v}-z\sqrt{z})\sqrt{zv}}{(\sqrt{zv})^2} = \dfrac{v\sqrt{v}\sqrt{zv}-z\sqrt{z}\sqrt{zv}}{zv} \]</div>
+            </div>
+
+            <div id="ex7-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de raíces</div>
+                <div class="step-description">Operamos con las raíces cuadradas.</div>
+                <div class="step-math">\[ \dfrac{v\sqrt{v^2z}-z\sqrt{z^2v}}{zv} = \dfrac{v|v|\sqrt{z}-z|z|\sqrt{v}}{zv} \]</div>
+            </div>
+
+            <div id="ex7-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación final</div>
+                <div class="step-description">Asumiendo $v, z > 0$ para simplificar $\sqrt{v^2}=v$ y $\sqrt{z^2}=z$.</div>
+                <div class="step-math">\[ \dfrac{v^2\sqrt{z}-z^2\sqrt{v}}{zv} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex7-prev-btn" class="nav-btn" disabled onclick="prevStep(7)">Paso anterior</button>
+                </div>
+                <div id="ex7-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex7-next-btn" class="nav-btn" onclick="nextStep(7)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 8 -->
+    <div id="exercise8" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 8</h2>
+            <span class="text-sm">Simplificación de fracciones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{\dfrac{1}{x^{2}}-x}{\dfrac{1}{x^{2}}+x}\]</div>
+            </div>
+
+            <div id="ex8-step1" class="step-container">
+                <div class="concept">Concepto: Encontrar un común denominador en el numerador y en el denominador</div>
+                <div class="step-description">Simplificamos las fracciones en numerador y denominador.</div>
+                <div class="step-math">\[ \dfrac{\dfrac{1-x \cdot x^{2}}{x^{2}}}{\dfrac{1+x \cdot x^{2}}{x^{2}}} = \dfrac{\dfrac{1-x^{3}}{x^{2}}}{\dfrac{1+x^{3}}{x^{2}}} \]</div>
+            </div>
+
+            <div id="ex8-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: División de fracciones</div>
+                <div class="step-description">Multiplicar por el recíproco del denominador.</div>
+                <div class="step-math">\[ \dfrac{1-x^{3}}{x^{2}} \times \dfrac{x^{2}}{1+x^{3}} \]</div>
+            </div>
+
+            <div id="ex8-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación</div>
+                <div class="step-description">Cancelar $x^2$.</div>
+                <div class="step-math">\[ \dfrac{1-x^{3}}{\cancel{x^{2}}} \times \dfrac{\cancel{x^{2}}}{1+x^{3}} = \dfrac{1-x^{3}}{1+x^{3}} \]</div>
+            </div>
+
+            <div id="ex8-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización de la diferencia y suma de cubos</div>
+                <div class="step-description">Factorizamos numerador y denominador.</div>
+                <div class="step-math">\[ \dfrac{(1-x)(1+x+x^2)}{(1+x)(1-x+x^2)} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex8-prev-btn" class="nav-btn" disabled onclick="prevStep(8)">Paso anterior</button>
+                </div>
+                <div id="ex8-step-indicator" class="step-indicator">Paso 1 de 4</div>
+                <div class="flex items-center">
+                    <button id="ex8-next-btn" class="nav-btn" onclick="nextStep(8)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 9 -->
+    <div id="exercise9" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 9</h2>
+            <span class="text-sm">Simplificación de fracciones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{x^{2}+3x+2}{x^{2}+6x+8}\]</div>
+            </div>
+
+            <div id="ex9-step1" class="step-container">
+                <div class="concept">Concepto: Factorización de trinomios cuadrados</div>
+                <div class="step-description">Factorizamos el numerador y el denominador.</div>
+                <div class="step-math">\[ \dfrac{(x+1)(x+2)}{(x+2)(x+4)} \]</div>
+            </div>
+
+            <div id="ex9-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \dfrac{(x+1)\cancel{(x+2)}}{\cancel{(x+2)}(x+4)} \]</div>
+            </div>
+
+            <div id="ex9-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado final</div>
+                <div class="step-description">Expresión simplificada.</div>
+                <div class="step-math">\[ \dfrac{x+1}{x+4} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex9-prev-btn" class="nav-btn" disabled onclick="prevStep(9)">Paso anterior</button>
+                </div>
+                <div id="ex9-step-indicator" class="step-indicator">Paso 1 de 3</div>
+                <div class="flex items-center">
+                    <button id="ex9-next-btn" class="nav-btn" onclick="nextStep(9)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 10 -->
+    <div id="exercise10" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 10</h2>
+            <span class="text-sm">Simplificación de fracciones algebraicas</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{x^{4}+4x^{2}+4}{4-x^{4}}\]</div>
+            </div>
+
+            <div id="ex10-step1" class="step-container">
+                <div class="concept">Concepto: Factorización del numerador como trinomio cuadrado perfecto</div>
+                <div class="step-description">Reconocemos el patrón del trinomio cuadrado perfecto.</div>
+                <div class="step-math">\[ \dfrac{(x^{2}+2)^{2}}{4-x^{4}} \]</div>
+            </div>
+
+            <div id="ex10-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización del denominador como diferencia de cuadrados</div>
+                <div class="step-description">Reescribimos el denominador como diferencia de cuadrados.</div>
+                <div class="step-math">\[ \dfrac{(x^{2}+2)^{2}}{(2-x^{2})(2+x^{2})} \]</div>
+            </div>
+
+            <div id="ex10-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \dfrac{(x^{2}+2)\cancel{(x^{2}+2)}}{(2-x^{2})\cancel{(2+x^{2})}} \]</div>
+            </div>
+
+            <div id="ex10-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado simplificado</div>
+                <div class="step-description">Expresión después de simplificar.</div>
+                <div class="step-math">\[ \dfrac{x^{2}+2}{2-x^{2}} \]</div>
+            </div>
+
+            <div id="ex10-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Reescribir el denominador</div>
+                <div class="step-description">Para tener el término con $x^2$ primero en el denominador.</div>
+                <div class="step-math">\[ \dfrac{x^{2}+2}{-(x^{2}-2)} = -\dfrac{x^{2}+2}{x^{2}-2} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex10-prev-btn" class="nav-btn" disabled onclick="prevStep(10)">Paso anterior</button>
+                </div>
+                <div id="ex10-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex10-next-btn" class="nav-btn" onclick="nextStep(10)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 11 -->
+    <div id="exercise11" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 11</h2>
+            <span class="text-sm">Fracción algebraica con trinomio</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{x^{2}-2yx-3y^{2}}{x^{2}-yx+3y^{2}}\]</div>
+            </div>
+
+            <div id="ex11-step1" class="step-container">
+                <div class="concept">Concepto: Factorización de trinomios cuadráticos</div>
+                <div class="step-description">Factorizamos el numerador buscando dos términos que multiplicados den el último término y sumados/restados den el término central.</div>
+                <div class="step-math">\[ \dfrac{(x-3y)(x+y)}{x^{2}-yx+3y^{2}} \]</div>
+            </div>
+
+            <div id="ex11-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Análisis del denominador</div>
+                <div class="step-description">En este caso, el denominador $x^2-yx+3y^2$ no se factoriza fácilmente en términos lineales con coeficientes enteros o racionales.</div>
+                <div class="step-math">\[ \dfrac{(x-3y)(x+y)}{x^{2}-yx+3y^{2}} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex11-prev-btn" class="nav-btn" disabled onclick="prevStep(11)">Paso anterior</button>
+                </div>
+                <div id="ex11-step-indicator" class="step-indicator">Paso 1 de 2</div>
+                <div class="flex items-center">
+                    <button id="ex11-next-btn" class="nav-btn" onclick="nextStep(11)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 12 -->
+    <div id="exercise12" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 12</h2>
+            <span class="text-sm">Simplificación de fracción algebraica</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{3x^{2}-7x-20}{3x^{3}+5x^{2}}\]</div>
+            </div>
+
+            <div id="ex12-step1" class="step-container">
+                <div class="concept">Concepto: Factorización del numerador</div>
+                <div class="step-description">Buscamos dos números que multiplicados den $3 \times -20 = -60$ y sumados den $-7$. Los números son $-12$ y $5$.</div>
+                <div class="step-math">\[ \dfrac{3x^{2}-12x+5x-20}{3x^{3}+5x^{2}} \]</div>
+            </div>
+
+            <div id="ex12-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización por agrupación</div>
+                <div class="step-description">Factorizamos el numerador agrupando términos.</div>
+                <div class="step-math">\[ \dfrac{3x(x-4)+5(x-4)}{3x^{3}+5x^{2}} = \dfrac{(3x+5)(x-4)}{3x^{3}+5x^{2}} \]</div>
+            </div>
+
+            <div id="ex12-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización del denominador</div>
+                <div class="step-description">Extraemos factor común en el denominador.</div>
+                <div class="step-math">\[ \dfrac{(3x+5)(x-4)}{x^{2}(3x+5)} \]</div>
+            </div>
+
+            <div id="ex12-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \dfrac{\cancel{(3x+5)}(x-4)}{x^{2}\cancel{(3x+5)}} \]</div>
+            </div>
+
+            <div id="ex12-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado final</div>
+                <div class="step-description">Expresión simplificada.</div>
+                <div class="step-math">\[ \dfrac{x-4}{x^{2}} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex12-prev-btn" class="nav-btn" disabled onclick="prevStep(12)">Paso anterior</button>
+                </div>
+                <div id="ex12-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex12-next-btn" class="nav-btn" onclick="nextStep(12)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 13 -->
+    <div id="exercise13" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 13</h2>
+            <span class="text-sm">Simplificación de fracción algebraica</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{x^{3}-9x}{x^{3}-6x^{2}+9x}\]</div>
+            </div>
+
+            <div id="ex13-step1" class="step-container">
+                <div class="concept">Concepto: Factor común</div>
+                <div class="step-description">Extraemos el factor común en el numerador y el denominador.</div>
+                <div class="step-math">\[ \dfrac{x(x^{2}-9)}{x(x^{2}-6x+9)} \]</div>
+            </div>
+
+            <div id="ex13-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación</div>
+                <div class="step-description">Cancelamos el factor común $x$.</div>
+                <div class="step-math">\[ \dfrac{\cancel{x}(x^{2}-9)}{\cancel{x}(x^{2}-6x+9)} = \dfrac{x^{2}-9}{x^{2}-6x+9} \]</div>
+            </div>
+
+            <div id="ex13-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización</div>
+                <div class="step-description">Factorizamos numerador y denominador.</div>
+                <div class="step-math">\[ \dfrac{(x-3)(x+3)}{(x-3)^{2}} \]</div>
+            </div>
+
+            <div id="ex13-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \dfrac{\cancel{(x-3)}(x+3)}{(x-3)\cancel{(x-3)}} \]</div>
+            </div>
+
+            <div id="ex13-step5" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado final</div>
+                <div class="step-description">Expresión simplificada.</div>
+                <div class="step-math">\[ \dfrac{x+3}{x-3} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex13-prev-btn" class="nav-btn" disabled onclick="prevStep(13)">Paso anterior</button>
+                </div>
+                <div id="ex13-step-indicator" class="step-indicator">Paso 1 de 5</div>
+                <div class="flex items-center">
+                    <button id="ex13-next-btn" class="nav-btn" onclick="nextStep(13)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ejercicio 14 -->
+    <div id="exercise14" class="exercise-container mb-8" style="display: none;">
+        <div class="exercise-header">
+            <h2 class="text-xl font-bold">Ejercicio 14</h2>
+            <span class="text-sm">Simplificación de fracción algebraica</span>
+        </div>
+        <div class="exercise-body">
+            <div class="expression-container">
+                <div>\[\dfrac{yx^{2}+xy^{2}}{x^{2}-y^{2}}\]</div>
+            </div>
+
+            <div id="ex14-step1" class="step-container">
+                <div class="concept">Concepto: Factor común en el numerador</div>
+                <div class="step-description">Extraemos factor común $xy$ en el numerador.</div>
+                <div class="step-math">\[ \dfrac{xy(x+y)}{x^{2}-y^{2}} \]</div>
+            </div>
+
+            <div id="ex14-step2" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Factorización del denominador</div>
+                <div class="step-description">Factorizamos el denominador como diferencia de cuadrados.</div>
+                <div class="step-math">\[ \dfrac{xy(x+y)}{(x-y)(x+y)} \]</div>
+            </div>
+
+            <div id="ex14-step3" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Simplificación de fracciones</div>
+                <div class="step-description">Cancelación de factores comunes.</div>
+                <div class="step-math">\[ \dfrac{xy\cancel{(x+y)}}{(x-y)\cancel{(x+y)}} \]</div>
+            </div>
+
+            <div id="ex14-step4" class="step-container" style="display: none;">
+                <div class="concept">Concepto: Resultado final</div>
+                <div class="step-description">Expresión simplificada.</div>
+                <div class="step-math">\[ \dfrac{xy}{x-y} \]</div>
+            </div>
+
+            <div class="navigation no-print">
+                <div class="flex items-center">
+                    <button id="ex14-prev-btn" class="nav-btn" disabled onclick="prevStep(14)">Paso anterior</button>
+                </div>
+                <div id="ex14-step-indicator" class="step-indicator">Paso 1 de 4</div>
+                <div class="flex items-center">
+                    <button id="ex14-next-btn" class="nav-btn" onclick="nextStep(14)">Ver siguiente paso</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto text-center text-sm text-gray-500 my-8">
+        <p>Taller Guiado: Solución Paso a Paso de Expresiones Algebraicas (con Racionalización)</p>
+    </footer>
+
+    <script>
+        // Datos de pasos para cada ejercicio
+        const exerciseSteps = {
+            1: 4,
+            2: 4,
+            3: 5,
+            4: 5,
+            5: 6,
+            6: 7,
+            7: 5,
+            8: 4,
+            9: 3,
+            10: 5,
+            11: 2,
+            12: 5,
+            13: 5,
+            14: 4
+        };
+
+        // Estado actual de cada ejercicio
+        const currentStep = {};
+        for (let i = 1; i <= 14; i++) {
+            currentStep[i] = 1;
+        }
+
+        // Función para actualizar los indicadores de pasos y botones de navegación
+        function updateStepIndicators(exerciseNum) {
+            const totalSteps = exerciseSteps[exerciseNum];
+            const stepIndicator = document.getElementById(`ex${exerciseNum}-step-indicator`);
+            stepIndicator.textContent = `Paso ${currentStep[exerciseNum]} de ${totalSteps}`;
+            
+            // Actualizar botones
+            const prevBtn = document.getElementById(`ex${exerciseNum}-prev-btn`);
+            const nextBtn = document.getElementById(`ex${exerciseNum}-next-btn`);
+            
+            prevBtn.disabled = currentStep[exerciseNum] === 1;
+            nextBtn.disabled = currentStep[exerciseNum] === totalSteps;
+            
+            nextBtn.textContent = currentStep[exerciseNum] === totalSteps ? "Finalizado" : "Ver siguiente paso";
+        }
+
+        // Función para mostrar el paso actual y ocultar los otros
+        function showCurrentStep(exerciseNum) {
+            const totalSteps = exerciseSteps[exerciseNum];
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById(`ex${exerciseNum}-step${i}`);
+                if (i <= currentStep[exerciseNum]) {
+                    stepElement.style.display = 'block';
+                } else {
+                    stepElement.style.display = 'none';
+                }
+            }
+            updateStepIndicators(exerciseNum);
+        }
+
+        // Función para avanzar al siguiente paso
+        function nextStep(exerciseNum) {
+            if (currentStep[exerciseNum] < exerciseSteps[exerciseNum]) {
+                currentStep[exerciseNum]++;
+                showCurrentStep(exerciseNum);
+            }
+        }
+
+        // Función para retroceder al paso anterior
+        function prevStep(exerciseNum) {
+            if (currentStep[exerciseNum] > 1) {
+                currentStep[exerciseNum]--;
+                showCurrentStep(exerciseNum);
+            }
+        }
+
+        // Función para mostrar un ejercicio específico y ocultar los demás
+        function showExercise(exerciseNum) {
+            // Ocultar todos los ejercicios
+            for (let i = 1; i <= 14; i++) {
+                const exerciseElement = document.getElementById(`exercise${i}`);
+                exerciseElement.style.display = 'none';
+                
+                // Desactivar el botón del ejercicio actual
+                const exerciseBtn = document.querySelector(`.exercise-btn:nth-child(${i})`);
+                exerciseBtn.classList.remove('active');
+            }
+            
+            // Mostrar el ejercicio seleccionado
+            const selectedExercise = document.getElementById(`exercise${exerciseNum}`);
+            selectedExercise.style.display = 'block';
+            
+            // Activar el botón del ejercicio actual
+            const activeBtn = document.querySelector(`.exercise-btn:nth-child(${exerciseNum})`);
+            activeBtn.classList.add('active');
+            
+            // Actualizar indicadores de pasos
+            showCurrentStep(exerciseNum);
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Asegurarse de que MathJax renderice las expresiones
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            }
+            
+            // Mostrar el ejercicio 1 por defecto
+            showExercise(1);
+        });
+    </script>
+</body>
+</html>
