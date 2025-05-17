@@ -6,7 +6,28 @@
     <title>Taller Guiado: Solución Paso a Paso de Expresiones Algebraicas</title>
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- MathJax para renderizar LaTeX -->
+    <!-- MathJax para renderizar LaTeX con soporte para \cancel -->
+    <script>
+        window.MathJax = {
+            loader: {
+                load: ['[tex]/cancel']
+            },
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                packages: {'[+]': ['cancel', 'base', 'ams', 'noerrors', 'noundefined']}
+            },
+            options: {
+                enableMenu: false
+            },
+            startup: {
+                ready: function() {
+                    MathJax.startup.defaultReady();
+                    console.log('MathJax configurado con paquete cancel');
+                }
+            }
+        };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
@@ -302,7 +323,7 @@
             <div id="ex3-step4" class="step-container" style="display: none;">
                 <div class="concept">Concepto: Simplificación de fracciones</div>
                 <div class="step-description">Cancelación de factores comunes.</div>
-                <div class="step-math">\[ \cancel{(x^{2}+xy+y^{2})} \times \dfrac{xy}{(x-y)\cancel{(x^2+xy+y^{2})}} \]</div>
+                <div class="step-math">\[ \cancel{(x^{2}+xy+y^{2})} \times \dfrac{xy}{(x-y)\cancel{(x^2+xy+y^2)}} \]</div>
             </div>
 
             <div id="ex3-step5" class="step-container" style="display: none;">
@@ -667,7 +688,7 @@
             <div id="ex10-step3" class="step-container" style="display: none;">
                 <div class="concept">Concepto: Simplificación de fracciones</div>
                 <div class="step-description">Cancelación de factores comunes.</div>
-                <div class="step-math">\[ \dfrac{(x^{2}+2)\cancel{(x^{2}+2)}}{(2-x^{2})\cancel{(2+x^{2})}} \]</div>
+                <div class="step-math">\[ \dfrac{\cancelto{x^{2}+2}{(x^{2}+2)^{2}}}{(2-x^{2})\cancel{(2+x^{2})}} \]</div>
             </div>
 
             <div id="ex10-step4" class="step-container" style="display: none;">
@@ -814,7 +835,7 @@
             <div id="ex13-step4" class="step-container" style="display: none;">
                 <div class="concept">Concepto: Simplificación de fracciones</div>
                 <div class="step-description">Cancelación de factores comunes.</div>
-                <div class="step-math">\[ \dfrac{\cancel{(x-3)}(x+3)}{(x-3)\cancel{(x-3)}} \]</div>
+                <div class="step-math">\[ \dfrac{\cancel{(x-3)}(x+3)}{\cancelto{x-3}{(x-3)^{2}}} \]</div>
             </div>
 
             <div id="ex13-step5" class="step-container" style="display: none;">
@@ -946,6 +967,13 @@
             if (currentStep[exerciseNum] < exerciseSteps[exerciseNum]) {
                 currentStep[exerciseNum]++;
                 showCurrentStep(exerciseNum);
+                
+                // Volver a renderizar MathJax después de mostrar el nuevo paso
+                if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([document.body]).catch(function (err) {
+                        console.error('Error al renderizar MathJax en paso:', err);
+                    });
+                }
             }
         }
 
@@ -954,6 +982,13 @@
             if (currentStep[exerciseNum] > 1) {
                 currentStep[exerciseNum]--;
                 showCurrentStep(exerciseNum);
+                
+                // Volver a renderizar MathJax después de mostrar el paso anterior
+                if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([document.body]).catch(function (err) {
+                        console.error('Error al renderizar MathJax en paso:', err);
+                    });
+                }
             }
         }
 
@@ -961,35 +996,58 @@
         function showExercise(exerciseNum) {
             // Ocultar todos los ejercicios
             for (let i = 1; i <= 14; i++) {
-                const exerciseElement = document.getElementById(`exercise${i}`);
-                exerciseElement.style.display = 'none';
-                
-                // Desactivar el botón del ejercicio actual
-                const exerciseBtn = document.querySelector(`.exercise-btn:nth-child(${i})`);
-                exerciseBtn.classList.remove('active');
+                const exercise = document.getElementById(`exercise${i}`);
+                if (exercise) {
+                    exercise.style.display = 'none';
+                }
+                const btn = document.querySelector(`.exercise-btn:nth-child(${i})`);
+                if (btn) {
+                    btn.classList.remove('active');
+                }
             }
             
             // Mostrar el ejercicio seleccionado
             const selectedExercise = document.getElementById(`exercise${exerciseNum}`);
-            selectedExercise.style.display = 'block';
+            if (selectedExercise) {
+                selectedExercise.style.display = 'block';
+            }
             
             // Activar el botón del ejercicio actual
             const activeBtn = document.querySelector(`.exercise-btn:nth-child(${exerciseNum})`);
-            activeBtn.classList.add('active');
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
             
             // Actualizar indicadores de pasos
             showCurrentStep(exerciseNum);
+
+            // Volver a renderizar MathJax para el contenido recién mostrado
+            if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                MathJax.typesetPromise([document.body]).catch(function (err) {
+                    console.error('Error al renderizar MathJax:', err);
+                });
+            }
         }
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
             // Asegurarse de que MathJax renderice las expresiones
             if (typeof MathJax !== 'undefined') {
-                MathJax.typeset();
+                try {
+                    MathJax.typesetPromise().then(function() {
+                        console.log('MathJax inicialmente renderizado correctamente');
+                    }).catch(function(err) {
+                        console.error('Error al renderizar MathJax inicial:', err);
+                    });
+                } catch (e) {
+                    console.error('Error al inicializar MathJax:', e);
+                }
             }
             
             // Mostrar el ejercicio 1 por defecto
-            showExercise(1);
+            setTimeout(function() {
+                showExercise(1);
+            }, 500); // Pequeña demora para asegurar que MathJax esté listo
         });
     </script>
 </body>
